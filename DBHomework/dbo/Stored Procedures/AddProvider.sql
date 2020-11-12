@@ -16,14 +16,15 @@ CREATE PROCEDURE [dbo].[AddProvider]
 AS
 BEGIN
 	INSERT INTO [dbo].[Providers] 
-		VALUES (NEWID(), @Name, @Telephone, @Email, @Adress, @Director)
+		VALUES (@Name, @Telephone, @Email, @Adress, @Director)
 
 	DECLARE @provider_id INT;
 
-	SELECT @provider_id = LAST([dbo].[Providers].[id])
+	SELECT TOP 1 @provider_id = [dbo].[Providers].[id] 
 	FROM [dbo].[Providers]
+	ORDER BY [dbo].[Providers].[id] DESC
 
-	INSERT INTO [dbo].[Products]
-		SELECT NEWID(), *, @provider_id FROM @Products
+	INSERT INTO [dbo].[Products] ([Name],[Short_name],[Vendor_code],[Barcode],[Price],[Provider_id])
+		SELECT *, @provider_id FROM @Products
 END;
 RETURN 0

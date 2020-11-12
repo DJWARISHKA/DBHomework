@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Products]
 (
-	[id] INT PRIMARY KEY NOT NULL UNIQUE,
+	[id] INT PRIMARY KEY NOT NULL UNIQUE IDENTITY(1,1),
 	[Name] VARCHAR (50),
 	[Short_name] VARCHAR (20),
 	[Vendor_code] INT,
